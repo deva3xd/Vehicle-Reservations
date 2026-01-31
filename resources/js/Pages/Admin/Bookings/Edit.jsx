@@ -2,25 +2,28 @@ import PageLayout from "@/Layouts/PageLayout";
 import InputError from '@/Components/InputError';
 import { Link, useForm } from "@inertiajs/react";
 
-const Edit = ({ usage, vehicles }) => {
-  console.log(usage)
+const Edit = ({ booking, profiles, vehicles, drivers }) => {
   const { data, setData, patch, errors } = useForm({
-    vehicle_id: usage.vehicle.id,
-    penggunaan_bbm: usage.penggunaan_bbm,
-    jadwal_servis: usage.jadwal_servis,
+    profile: booking.profile_id,
+    vehicle_id: booking.vehicle_id,
+    driver_id: booking.driver_id,
+    destinasi: booking.destinasi,
+    tanggal_mulai: booking.tanggal_mulai,
+    tanggal_selesai: booking.tanggal_selesai,
+    status: booking.status,
   });
 
   const submit = (e) => {
     e.preventDefault();
 
-    patch(route('admin.usages.update', usage.id));
+    patch(route('admin.bookings.update', booking.id));
   };
 
   return (
-    <PageLayout title="Usages - Edit">
+    <PageLayout title="Bookings - Edit">
       <ul className="flex items-center space-x-4">
         <li className="text-slate-500 font-medium text-base">
-          Usages
+          Bookings
         </li>
         <li>
           <svg xmlns="http://www.w3.org/2000/svg" className="fill-slate-500 w-3 -rotate-90" viewBox="0 0 24 24">
@@ -34,13 +37,30 @@ const Edit = ({ usage, vehicles }) => {
         </li>
       </ul>
       <div className="flex justify-between items-center my-2">
-        <h1 className="font-bold text-4xl">Usages</h1>
-        <Link href={route('admin.usages')} className="px-6 py-2 rounded-lg cursor-pointer text-white text-className tracking-wider font-medium border-0 outline-0 outline-none bg-red-700 hover:bg-red-800 active:bg-red-700">Back</Link>
+        <h1 className="font-bold text-4xl">Bookings</h1>
+        <Link href={route('admin.bookings')} className="px-6 py-2 rounded-lg cursor-pointer text-white text-className tracking-wider font-medium border-0 outline-0 outline-none bg-red-700 hover:bg-red-800 active:bg-red-700">Back</Link>
       </div>
 
       {/* content */}
       <div className="bg-white py-8">
         <form onSubmit={submit} className="flex flex-col justify-center max-w-lg mx-auto px-4">
+          <div className="mb-2">
+            <label className="text-slate-900 font-medium text-lg block">Plat Kendaraan</label>
+            <select
+              name="profile_id"
+              value={data.profile_id}
+              onChange={(e) => setData('profile_id', e.target.value)}
+              required
+              className="px-4 py-2 text-className rounded-md bg-white border border-gray-400 w-full max-w-className outline-blue-500"
+            >
+              <option value="" disabled>Pilih plat</option>
+              {profiles.map((p, i) => (
+                <option key={i} value={p.id}>{p.nama}</option>
+              ))}
+            </select>
+            <InputError message={errors.profile_id} />
+          </div>
+
           <div className="mb-2">
             <label className="text-slate-900 font-medium text-lg block">Plat Kendaraan</label>
             <select
@@ -59,34 +79,85 @@ const Edit = ({ usage, vehicles }) => {
           </div>
 
           <div className="mb-2">
-            <label className="text-slate-900 font-medium text-lg block">Penggunaan BBM</label>
+            <label className="text-slate-900 font-medium text-lg block">Pengemudi</label>
+            <select
+              name="driver_id"
+              value={data.driver_id}
+              onChange={(e) => setData('driver_id', e.target.value)}
+              required
+              className="px-4 py-2 text-className rounded-md bg-white border border-gray-400 w-full max-w-className outline-blue-500"
+            >
+              <option value="" disabled>Pilih pengemudi</option>
+              {drivers.map((d, i) => (
+                <option key={i} value={d.id}>{d.nama}</option>
+              ))}
+            </select>
+            <InputError message={errors.driver_id} />
+          </div>
+
+          <div className="mb-2">
+            <label className="text-slate-900 font-medium text-lg block">Destinasi</label>
             <input
-              id="penggunaan_bbm"
+              id="destinasi"
               type="text"
-              name="penggunaan_bbm"
-              value={data.penggunaan_bbm}
+              name="destinasi"
+              value={data.destinasi}
               isfocused="true"
-              onChange={(e) => setData('penggunaan_bbm', e.target.value)}
+              onChange={(e) => setData('destinasi', e.target.value)}
               placeholder="Masukkan penggunaan bbm"
               required
               className="px-4 py-2 text-className rounded-md bg-white border border-gray-400 w-full max-w-className outline-blue-500"
             />
-            <InputError message={errors.penggunaan_bbm} />
+            <InputError message={errors.destinasi} />
           </div>
 
           <div className="mb-2">
-            <label className="text-slate-900 font-medium text-lg block">Jadwal Servis</label>
+            <label className="text-slate-900 font-medium text-lg block">Tanggal Mulai</label>
             <input
-              id="jadwal_servis"
+              id="tanggal_mulai"
               type="date"
-              name="jadwal_servis"
-              value={data.jadwal_servis}
+              name="tanggal_mulai"
+              value={data.tanggal_mulai}
               isfocused="true"
-              onChange={(e) => setData('jadwal_servis', e.target.value)}
+              onChange={(e) => setData('tanggal_mulai', e.target.value)}
+              placeholder="Masukkan penggunaan bbm"
               required
               className="px-4 py-2 text-className rounded-md bg-white border border-gray-400 w-full max-w-className outline-blue-500"
             />
-            <InputError message={errors.jadwal_servis} />
+            <InputError message={errors.tanggal_mulai} />
+          </div>
+
+          <div className="mb-2">
+            <label className="text-slate-900 font-medium text-lg block">Tanggal Selesai</label>
+            <input
+              id="tanggal_selesai"
+              type="date"
+              name="tanggal_selesai"
+              value={data.tanggal_selesai}
+              isfocused="true"
+              onChange={(e) => setData('tanggal_selesai', e.target.value)}
+              required
+              className="px-4 py-2 text-className rounded-md bg-white border border-gray-400 w-full max-w-className outline-blue-500"
+            />
+            <InputError message={errors.tanggal_selesai} />
+          </div>
+
+          <div className="mb-2">
+            <label className="text-slate-900 font-medium text-lg block">Plat Kendaraan</label>
+            <select
+              name="status"
+              value={data.status}
+              onChange={(e) => setData('status', e.target.value)}
+              required
+              className="px-4 py-2 text-className rounded-md bg-white border border-gray-400 w-full max-w-className outline-blue-500"
+            >
+              <option value="" disabled>Pilih plat</option>
+              <option value="menunggu">Menunggu</option>
+              <option value="disetujui">Disetujui</option>
+              <option value="ditolak">Ditolak</option>
+              <option value="selesai">Selesai</option>
+            </select>
+            <InputError message={errors.status} />
           </div>
           <button type="submit" className="px-6 py-2 rounded-lg cursor-pointer text-white text-className tracking-wider font-medium border-0 outline-0 outline-none bg-blue-700 hover:bg-blue-800 active:bg-blue-700">Submit</button>
         </form>

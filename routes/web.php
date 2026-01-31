@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminBookingController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ApproverController;
 use App\Http\Controllers\BookingController;
@@ -28,12 +29,12 @@ Route::prefix('admin')->group(function () {
         Route::get('/', AdminController::class)->name('admin.dashboard');
 
         // bookings
-        Route::get('/bookings', [BookingController::class, 'index'])->name('admin.bookings');
-        Route::get('/bookings/edit/{id}', [BookingController::class, 'edit'])->name('admin.bookings.edit');
-        Route::patch('/bookings/edit/{id}', [BookingController::class, 'update'])->name('admin.bookings.update');
-        Route::get('/bookings/create', [BookingController::class, 'create'])->name('admin.bookings.create');
-        Route::post('/bookings/create', [BookingController::class, 'store'])->name('admin.bookings.store');
-        Route::delete('/bookings/{id}', [BookingController::class, 'destroy'])->name('admin.bookings.destroy');
+        Route::get('/bookings', [AdminBookingController::class, 'index'])->name('admin.bookings');
+        Route::get('/bookings/edit/{id}', [AdminBookingController::class, 'edit'])->name('admin.bookings.edit');
+        Route::patch('/bookings/edit/{id}', [AdminBookingController::class, 'update'])->name('admin.bookings.update');
+        Route::get('/bookings/create', [AdminBookingController::class, 'create'])->name('admin.bookings.create');
+        Route::post('/bookings/create', [AdminBookingController::class, 'store'])->name('admin.bookings.store');
+        Route::delete('/bookings/{id}', [AdminBookingController::class, 'destroy'])->name('admin.bookings.destroy');
 
         // drivers
         Route::get('/drivers', [DriverController::class, 'index'])->name('admin.drivers');

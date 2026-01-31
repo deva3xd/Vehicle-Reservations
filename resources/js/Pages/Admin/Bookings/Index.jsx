@@ -2,17 +2,17 @@ import dayjs from "dayjs";
 import PageLayout from "@/Layouts/PageLayout";
 import { Link, router } from "@inertiajs/react";
 
-const Index = ({ usages }) => {
+const Index = ({ bookings }) => {
   return (
-    <PageLayout title="Usages">
+    <PageLayout title="Bookings">
       <ul className="flex items-center space-x-4">
         <li className="text-slate-500 font-medium text-base">
-          Usages
+          Bookings
         </li>
       </ul>
       <div className="flex justify-between items-center my-2">
-        <h1 className="font-bold text-4xl">Usages</h1>
-        <Link href={route('admin.usages.create')} className="px-6 py-2 rounded-lg cursor-pointer text-white text-className tracking-wider font-medium border-0 outline-0 outline-none bg-blue-700 hover:bg-blue-800 active:bg-blue-700">Add Data</Link>
+        <h1 className="font-bold text-4xl">Bookings</h1>
+        <Link href={route('admin.bookings.create')} className="px-6 py-2 rounded-lg cursor-pointer text-white text-className tracking-wider font-medium border-0 outline-0 outline-none bg-blue-700 hover:bg-blue-800 active:bg-blue-700">Add Data</Link>
       </div>
 
       {/* table */}
@@ -22,19 +22,25 @@ const Index = ({ usages }) => {
             <tr>
               <th className="p-4 text-left text-sm font-medium text-white"></th>
               <th className="p-4 text-left text-sm font-medium text-white">
-                Plat
+                Nama
               </th>
               <th className="p-4 text-left text-sm font-medium text-white">
-                Jenis
+                Plat Kendaraan
               </th>
               <th className="p-4 text-left text-sm font-medium text-white">
-                Tanggal Pemakaian
+                Pengemudi
               </th>
               <th className="p-4 text-left text-sm font-medium text-white">
-                Penggunaan BBM
+                Destinasi
               </th>
               <th className="p-4 text-left text-sm font-medium text-white">
-                Jadwal Service
+                Tanggal Mulai
+              </th>
+              <th className="p-4 text-left text-sm font-medium text-white">
+                Tanggal Selesai
+              </th>
+              <th className="p-4 text-left text-sm font-medium text-white">
+                Status
               </th>
               <th className="p-4 text-left text-sm font-medium text-white">
                 Aksi
@@ -43,29 +49,39 @@ const Index = ({ usages }) => {
           </thead>
 
           <tbody className="whitespace-nowrap">
-            {usages.map((u, i) => (
+            {bookings.map((b, i) => (
               <tr key={i}>
                 <td className="p-4 text-[15px] flex justify-center text-slate-900 font-medium">
                   {i + 1}
                 </td>
-                <td className="p-4 text-[15px] text-slate-900 font-medium uppercase">
-                  {u.vehicle.plat}
+                <td className="p-4 text-[15px] text-slate-900 font-medium capitalize">
+                  {b.profile.nama}
                 </td>
                 <td className="p-4 text-[15px] text-slate-900 font-medium uppercase">
-                  {u.vehicle.jenis}
+                  {b.vehicle.plat}
                 </td>
                 <td className="p-4 text-[15px] text-slate-900 font-medium capitalize">
-                  {dayjs(u.created_at).format('DD MMMM YYYY')}
+                  {b.driver.nama}
                 </td>
                 <td className="p-4 text-[15px] text-slate-900 font-medium capitalize">
-                  {u.penggunaan_bbm}
+                  {b.destinasi}
+                </td>
+                <td className="p-4 text-[15px] text-slate-900 font-medium capitalize">
+                  {dayjs(b.tanggal_mulai).format('DD MMMM YYYY')}
                 </td>
                 <td className="p-4 text-[15px] text-slate-900 font-medium">
-                  {dayjs(u.jadwal_servis).format('DD MMMM YYYY')}
+                  {dayjs(b.tanggal_selesai).format('DD MMMM YYYY')}
+                </td>
+                <td className="p-4 text-[15px] text-slate-900 font-medium">
+                  <div
+                    className={`w-fit capitalize px-6 py-1 rounded-full text-white text-sm tracking-wider font-medium border-0 outline-0 outline-none ${b.status === 'disetujui' ? "bg-green-500" : b.status === 'menunggu' ? "bg-yellow-500" : b.status === 'selesai' ? "bg-blue-500" : "bg-red-500"}`}
+                  >
+                    {b.status}
+                  </div>
                 </td>
                 <td className="p-4">
                   <div className="flex items-center">
-                    <Link href={route('admin.usages.edit', u.id)} className="mr-3 cursor-pointer">
+                    <Link href={route('admin.bookings.edit', b.id)} className="mr-3 cursor-pointer">
                       <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 fill-blue-500 hover:fill-blue-700"
                         viewBox="0 0 348.882 348.882">
                         <path
@@ -76,7 +92,7 @@ const Index = ({ usages }) => {
                           data-original="#000000" />
                       </svg>
                     </Link>
-                    <button onClick={() => router.delete(route('admin.usages.destroy', u.id))} className="mr-3 cursor-pointer">
+                    <button onClick={() => router.delete(route('admin.bookings.destroy', b.id))} className="mr-3 cursor-pointer">
                       <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 fill-red-500 hover:fill-red-700" viewBox="0 0 24 24">
                         <path
                           d="M19 7a1 1 0 0 0-1 1v11.191A1.92 1.92 0 0 1 15.99 21H8.01A1.92 1.92 0 0 1 6 19.191V8a1 1 0 0 0-2 0v11.191A3.918 3.918 0 0 0 8.01 23h7.98A3.918 3.918 0 0 0 20 19.191V8a1 1 0 0 0-1-1Zm1-3h-4V2a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v2H4a1 1 0 0 0 0 2h16a1 1 0 0 0 0-2ZM10 4V3h4v1Z"

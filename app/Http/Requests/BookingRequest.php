@@ -28,7 +28,7 @@ class BookingRequest extends FormRequest
             'tanggal_mulai' => 'required|date',
             'tanggal_selesai' => 'required|date',
             'destinasi' => 'required|string|max:255',
-            'status' => 'sometimes|in:menunggu,disetujui,ditolak',
+            'status' => 'sometimes|in:menunggu,disetujui,ditolak,selesai',
         ];
     }
 }

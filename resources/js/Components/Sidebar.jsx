@@ -26,7 +26,7 @@ export default function Sidebar() {
 
               {/* menu */}
               <li>
-                <a href={routes('admin.bookings')}
+                <a href={route('admin.bookings')}
                   className="text-slate-800 font-medium hover:text-slate-900 text-[15px] flex items-center gap-2 hover:bg-gray-100 rounded px-4 py-2 transition-all">
                   <NotepadText size={20} />
                   <span>Bookings</span>
