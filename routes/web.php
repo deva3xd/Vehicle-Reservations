@@ -16,12 +16,14 @@ Route::middleware(['auth', 'role:approver'])->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
 
     // bookings
-    Route::get('/bookings', [BookingController::class, 'index'])->name('bookings');
-    Route::get('/bookings/edit/{id}', [BookingController::class, 'edit'])->name('bookings.edit');
-    Route::patch('/bookings/edit/{id}', [BookingController::class, 'update'])->name('bookings.update');
-    Route::get('/bookings/create', [BookingController::class, 'create'])->name('bookings.create');
-    Route::post('/bookings/create', [BookingController::class, 'store'])->name('bookings.store');
-    Route::delete('/bookings/{id}', [BookingController::class, 'destroy'])->name('bookings.destroy');
+    Route::middleware(['auth', 'profile.completed'])->group(function () {
+        Route::get('/bookings', [BookingController::class, 'index'])->name('bookings');
+        Route::get('/bookings/edit/{id}', [BookingController::class, 'edit'])->name('bookings.edit');
+        Route::patch('/bookings/edit/{id}', [BookingController::class, 'update'])->name('bookings.update');
+        Route::get('/bookings/create', [BookingController::class, 'create'])->name('bookings.create');
+        Route::post('/bookings/create', [BookingController::class, 'store'])->name('bookings.store');
+        Route::delete('/bookings/{id}', [BookingController::class, 'destroy'])->name('bookings.destroy');
+    });
 });
 
 Route::prefix('admin')->group(function () {
@@ -43,7 +45,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/drivers/create', [DriverController::class, 'create'])->name('admin.drivers.create');
         Route::post('/drivers/create', [DriverController::class, 'store'])->name('admin.drivers.store');
         Route::delete('/drivers/{id}', [DriverController::class, 'destroy'])->name('admin.drivers.destroy');
-       
+
         // usages
         Route::get('/usages', [UsageController::class, 'index'])->name('admin.usages');
         Route::get('/usages/edit/{id}', [UsageController::class, 'edit'])->name('admin.usages.edit');
