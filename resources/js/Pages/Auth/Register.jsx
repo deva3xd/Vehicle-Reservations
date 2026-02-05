@@ -72,7 +72,7 @@ export default function Register() {
         <button type="submit" className="w-full py-2 px-4 text-[15px] font-medium tracking-wide rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none cursor-pointer">
           Register
         </button>
-        <p className="text-slate-900 text-sm !mt-6 text-center">Already have an account? <Link href={route('login')} className="text-blue-600 hover:underline ml-1 whitespace-nowrap font-semibold">Login here</Link></p>
+        <p className="text-slate-900 text-sm !mt-6 text-center">Sudah punya akun? <Link href={route('login')} className="text-blue-600 hover:underline ml-1 whitespace-nowrap font-semibold">Login</Link> sekarang</p>
       </form>
     </GuestLayout>
   );

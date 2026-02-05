@@ -55,7 +55,7 @@ export default function Login() {
         <button type="submit" className="w-full py-2 px-4 text-[15px] font-medium tracking-wide rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none cursor-pointer">
           Sign in
         </button>
-        <p className="text-slate-900 text-sm !mt-6 text-center">Don't have an account? <Link href={route('register')} className="text-blue-600 hover:underline ml-1 whitespace-nowrap font-semibold">Register here</Link></p>
+        <p className="text-slate-900 text-sm !mt-6 text-center">Belum punya akun? <Link href={route('register')} className="text-blue-600 hover:underline ml-1 whitespace-nowrap font-semibold">Register</Link> sekarang</p>
       </form>
 
     </GuestLayout>

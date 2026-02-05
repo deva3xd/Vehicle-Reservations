@@ -26,11 +26,11 @@ export default function Sidebar() {
 
               {/* menu */}
               <li>
-                <a href={route('admin.bookings')}
+                <Link href={route('admin.bookings')}
                   className="text-slate-800 font-medium hover:text-slate-900 text-[15px] flex items-center gap-2 hover:bg-gray-100 rounded px-4 py-2 transition-all">
                   <NotepadText size={20} />
                   <span>Bookings</span>
-                </a>
+                </Link>
               </li>
               <li>
                 <Link href={route('admin.drivers')}
@@ -44,7 +44,7 @@ export default function Sidebar() {
                 <Link href={route('admin.usages')}
                   className="text-slate-800 font-medium hover:text-slate-900 text-[15px] flex items-center gap-2 hover:bg-gray-100 rounded px-4 py-2 transition-all">
                   <Gauge size={20} />
-                  <span>Usage</span>
+                  <span>Usages</span>
                 </Link>
               </li>
               <li>

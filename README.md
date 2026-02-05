@@ -13,7 +13,7 @@
 - Clone project
 - Navigate to project
 - Install dependencies with `npm install` and `composer install`
-- Rename .env.example to .env
+- Copy env file `cp .env.example .env`
 - Generate key `php artisan key:generate`
 - Migrate database `php artisan migrate`
 - Run seeder `php artisan db:seed`

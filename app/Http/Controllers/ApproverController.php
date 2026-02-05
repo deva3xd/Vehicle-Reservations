@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Booking;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Auth;
 
 class ApproverController extends Controller
 {
@@ -11,6 +13,10 @@ class ApproverController extends Controller
      */
     public function __invoke()
     {
-        return Inertia::render('Dashboard');
+        $bookings = Booking::whereHas('profile', function ($query) {
+            $query->where('user_id', Auth::id());
+        })->select('id', 'status')->get();
+        
+        return Inertia::render('Dashboard', compact('bookings'));
     }
 }
